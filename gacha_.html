@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>幸運抽獎遊戲 (可重複)</title>
+    <style>
+        /* CSS 樣式與之前相同，此處不再贅述 */
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+
+        .lottery-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        #winner-display {
+            font-size: 24px;
+            font-weight: bold;
+            color: #28a745;
+            min-height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px dashed #ddd;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+
+        #draw-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #draw-button:hover {
+            background-color: #0056b3;
+        }
+
+        #draw-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lottery-container">
+        <h1>幸運抽獎遊戲</h1>
+        <p>點擊按鈕抽出一位幸運兒！</p>
+        <div id="winner-display">
+            中獎者會顯示在這裡
+        </div>
+        <button id="draw-button">開始抽獎</button>
+    </div>
+
+    <script>
+        // JavaScript 程式碼開始
+
+        // 1. 參與抽獎的名單
+        const participants = [
+            'A賞',
+            'B賞',
+            'B賞',
+            'Ｃ賞',
+            'Ｃ賞',
+            'Ｃ賞',
+            'Ｄ賞',
+            'Ｄ賞',
+            'Ｄ賞',
+            'Ｄ賞',
+            'E賞',
+            'E賞',
+            'E賞',
+            'E賞',
+            'E賞',
+            'F賞',
+            'F賞',
+            'F賞',
+            'F賞',
+            'F賞',
+            'F賞',
+        ];
+
+        // 2. 獲取 HTML 元素
+        const drawButton = document.getElementById('draw-button');
+        const winnerDisplay = document.getElementById('winner-display');
+
+        // 3. 綁定點擊事件
+        drawButton.addEventListener('click', function() {
+            // 抽獎開始時，先禁用按鈕，防止重複點擊
+            drawButton.disabled = true;
+            winnerDisplay.textContent = '抽獎中...';
+
+            let spinCount = 0;
+            const spinInterval = setInterval(function() {
+                spinCount++;
+                const randomIndex = Math.floor(Math.random() * participants.length);
+                winnerDisplay.textContent = participants[randomIndex];
+
+                if (spinCount > 20) {
+                    clearInterval(spinInterval);
+                    pickWinner();
+                }
+            }, 100);
+        });
+
+        // 4. 抽出最終中獎者的函式
+        function pickWinner() {
+            if (participants.length > 0) {
+                const winnerIndex = Math.floor(Math.random() * participants.length);
+                const winner = participants[winnerIndex];
+                winnerDisplay.textContent = `恭喜 ${winner}！`;
+
+                // *** 修改重點 ***
+                // 在顯示中獎者 2 秒後，重新啟用抽獎按鈕
+                setTimeout(function() {
+                    drawButton.disabled = false;
+                    winnerDisplay.textContent = '點擊按鈕再次抽獎';
+                }, 2000); // 2000 毫秒 = 2 秒
+
+            } else {
+                winnerDisplay.textContent = '沒有參與者可以抽獎！';
+                // 如果沒有參與者，按鈕也應該保持可點擊狀態，以便使用者發現問題
+                drawButton.disabled = false;
+            }
+        }
+        // JavaScript 程式碼結束
+    </script>
+
+</body>
+</html>

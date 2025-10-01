@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>九九乘法表</title>
+    <style>
+        /* CSS 樣式，讓頁面更美觀 */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        input[type="number"] {
+            width: 80px;
+            padding: 10px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>九九乘法計算機</h1>
+        <p>請輸入兩個 1 到 9 之間的數字：</p>
+
+        <input type="number" id="num1" min="1" max="9" value="1">
+        <span>&times;</span>
+        <input type="number" id="num2" min="1" max="9" value="1">
+
+        <br><br>
+
+        <button onclick="calculate()">計算</button>
+
+        <p id="result"></p>
+    </div>
+
+    <script>
+        // JavaScript 程式碼
+        function calculate() {
+            // 1. 取得使用者輸入的數字
+            // document.getElementById("ID") 是用來選取 HTML 中特定 id 元素的語法
+            // .value 可以取得 input 元素中的值 (會是字串格式)
+            // parseInt() 是將字串轉換成整數
+            var num1 = parseInt(document.getElementById("num1").value);
+            var num2 = parseInt(document.getElementById("num2").value);
+
+            // 2. 檢查輸入是否在 1 到 9 的範圍內
+            if (num1 >= 1 && num1 <= 9 && num2 >= 1 && num2 <= 9) {
+                // 3. 進行乘法計算
+                var product = num1 * num2;
+
+                // 4. 將結果顯示在網頁上
+                // .innerHTML 可以用來設定 HTML 元素的內容
+                document.getElementById("result").innerHTML = num1 + " &times; " + num2 + " = " + product;
+            } else {
+                // 如果輸入不合法，顯示錯誤訊息
+                document.getElementById("result").innerHTML = "請確認兩個數字都在 1 到 9 的範圍內！";
+            }
+        }
+    </script>
+
+</body>
+</html>
